@@ -23,44 +23,14 @@ VM_PASSWORD="azureuser@123"
 VM_IMAGE="Ubuntu2204"
 VM_SIZE="Standard_B1s"
 
-if [ $(az group exists --name $RESOURCE_GROUP_NAME) = false ]; then 
-   # Create Resource Group
-    echo "Creating a resource group with name ${RESOURCE_GROUP_NAME} in location ${RESOURCE_GROUP_LOCATION}" 
-    az group create \
-        --location $RESOURCE_GROUP_LOCATION \
-        --name $RESOURCE_GROUP_NAME
-else
-   echo "$RESOURCE_GROUP_NAME already exists"
-fi
-
-
-if [[ $(az network vnet list --resource-group $RESOURCE_GROUP_NAME --query "[?name=='$VIRTUAL_NETWORK_NAME'] | length(@)") > 0 ]]
-then
-  echo "$VIRTUAL_NETWORK_NAME exists"
-else
-  echo "$VIRTUAL_NETWORK_NAME doesn't exist" 
-# Create a virtual network
-echo "Create a vnet with address ${VIRTUAL_NETWORK_ADDRESS} and name ${VIRTUAL_NETWORK_NAME}"
-az network vnet create \
-    --name ${VIRTUAL_NETWORK_NAME} \
-    --resource-group ${RESOURCE_GROUP_NAME} \
-    --location $RESOURCE_GROUP_LOCATION \
-    --address-prefixes ${VIRTUAL_NETWORK_ADDRESS}
-fi
 
 
 
-if az network vnet subnet show --resource-group $RESOURCE_GROUP_NAME --vnet-name $VIRTUAL_NETWORK_NAME -n ${VIRTUAL_NETWORK_SUBNET_NAME} -o none; then
-   echo "${VIRTUAL_NETWORK_SUBNET_NAME} exists"
-else
-   echo "${VIRTUAL_NETWORK_SUBNET_NAME} doesn't exist"
-   echo "Create a subnet with address ${VIRTUAL_NETWORK_SUBNET_ADDRESS} and name ${VIRTUAL_NETWORK_SUBNET_NAME}"
-az network vnet subnet create \
-    --name ${VIRTUAL_NETWORK_SUBNET_NAME} \
-    --resource-group ${RESOURCE_GROUP_NAME} \
-    --vnet-name ${VIRTUAL_NETWORK_NAME} \
-    --address-prefixes ${VIRTUAL_NETWORK_SUBNET_ADDRESS}
-fi
+
+
+
+
+this is dummy 
 
 # from this below lines code is commented 
 : '
